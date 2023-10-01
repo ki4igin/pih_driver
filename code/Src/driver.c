@@ -51,14 +51,12 @@ void driver_el_set_k(uint32_t k_deg2pulse)
     el.k_deg2pulse = k_deg2pulse;
 }
 
-int32_t driver_az_get_pos(void)
+struct driver_pos driver_get_pos(void)
 {
-    return motor_get_pos(&az);
-}
-
-int32_t driver_el_get_pos(void)
-{
-    return motor_get_pos(&el);
+    return (struct driver_pos){
+        .az = motor_get_pos(&az),
+        .el = motor_get_pos(&el),
+    };
 }
 
 void driver_origin(void)

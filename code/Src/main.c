@@ -64,12 +64,20 @@ static void cmd_work(struct cmd cmd)
         driver_el_set_k(cmd.arg);
     } break;
     case CMD_AZ_GET_POS: {
-        cmd.arg = driver_az_get_pos();
+        cmd.arg = driver_get_pos().az;
         UART_Send_Array(&cmd, sizeof(cmd));
     } break;
     case CMD_EL_GET_POS: {
-        cmd.arg = driver_el_get_pos();
+        cmd.arg = driver_get_pos().el;
         UART_Send_Array(&cmd, sizeof(cmd));
+    } break;
+    case CMD_GET_POS: {
+        struct cmd_ex cmd_ex = {
+            .id = CMD_GET_POS,
+            .arg[0] = driver_get_pos().az,
+            .arg[1] = driver_get_pos().el,
+        };
+        UART_Send_Array(&cmd_ex, sizeof(cmd_ex));
     } break;
     case CMD_SET_ORIGIN: {
         driver_origin();
