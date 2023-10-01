@@ -75,17 +75,6 @@
                 "isDefault": true
             },
             "problemMatcher": []
-        },
-        {
-            "label": "MCU Reset",
-            "type": "shell",
-            "command": "./GCC/mcu_reset.sh",
-            "args": [],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "problemMatcher": []
         }
     ]
 }
