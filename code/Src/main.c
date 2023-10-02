@@ -39,6 +39,10 @@ static void cmd_work(struct cmd cmd)
     case CMD_RESET: {
         NVIC_SystemReset();
     } break;
+    case CMD_TEST: {
+        cmd.arg = 0x0A0A;
+        UART_Send_Array(&cmd, sizeof(cmd));
+    } break;
     case CMD_STOP: {
         driver_stop();
     } break;
