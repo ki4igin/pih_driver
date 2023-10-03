@@ -4,14 +4,14 @@
 #include "stm32f4xx_ll_gpio.h"
 
 static struct motor az = {
-    .gpio_p = {S1_GPIO_Port, S1_Pin},
-    .gpio_n = {S2_GPIO_Port, S2_Pin},
+    .gpio_p = {S3_GPIO_Port, S3_Pin},
+    .gpio_n = {S4_GPIO_Port, S4_Pin},
     .k_deg2pulse = 20,
 };
 
 static struct motor el = {
-    .gpio_p = {S3_GPIO_Port, S3_Pin},
-    .gpio_n = {S4_GPIO_Port, S4_Pin},
+    .gpio_p = {S1_GPIO_Port, S1_Pin},
+    .gpio_n = {S2_GPIO_Port, S2_Pin},
     .k_deg2pulse = 20,
 };
 
