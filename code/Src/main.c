@@ -21,6 +21,9 @@ enum cmd_id {
     CMD_AZ_GET_POS,
     CMD_EL_GET_POS,
     CMD_GET_POS,
+    CMD_AZ_GET_OFFSET,
+    CMD_EL_GET_OFFSET,
+    CMD_GET_OFFSET,
 };
 
 struct cmd {
@@ -80,6 +83,22 @@ static void cmd_work(struct cmd cmd)
             .id = CMD_GET_POS,
             .arg[0] = driver_get_pos().az,
             .arg[1] = driver_get_pos().el,
+        };
+        UART_Send_Array(&cmd_ex, sizeof(cmd_ex));
+    } break;
+    case CMD_AZ_GET_OFFSET: {
+        cmd.arg = driver_get_offset().az;
+        UART_Send_Array(&cmd, sizeof(cmd));
+    } break;
+    case CMD_EL_GET_OFFSET: {
+        cmd.arg = driver_get_offset().el;
+        UART_Send_Array(&cmd, sizeof(cmd));
+    } break;
+    case CMD_GET_OFFSET: {
+        struct cmd_ex cmd_ex = {
+            .id = CMD_GET_OFFSET,
+            .arg[0] = driver_get_offset().az,
+            .arg[1] = driver_get_offset().el,
         };
         UART_Send_Array(&cmd_ex, sizeof(cmd_ex));
     } break;
