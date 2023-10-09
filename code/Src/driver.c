@@ -25,6 +25,16 @@ void driver_el_offset(int32_t offset_deg)
     motor_offset(&el, offset_deg);
 }
 
+void driver_az_req_dn(int32_t offset_deg)
+{
+    motor_req_dn(&az, offset_deg);
+}
+
+void driver_el_req_dn(int32_t offset_deg)
+{
+    motor_req_dn(&el, offset_deg);
+}
+
 void driver_az_stop(void)
 {
     motor_stop(&az);

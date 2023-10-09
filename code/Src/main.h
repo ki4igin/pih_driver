@@ -46,6 +46,28 @@ void Error_Handler(void);
 #define NVIC_PRIORITYGROUP_4 ((uint32_t)0x00000003)
 #endif
 
+enum cmd_id {
+    CMD_RESET = 1,
+    CMD_TEST = 2,
+    CMD_LED_TOGGLE,
+    CMD_AZ_SET_K,
+    CMD_EL_SET_K,
+    CMD_SET_ORIGIN,
+    CMD_STOP,
+    CMD_AZ_STOP,
+    CMD_EL_STOP,
+    CMD_AZ_OFFSET,
+    CMD_EL_OFFSET,
+    CMD_AZ_GET_POS,
+    CMD_EL_GET_POS,
+    CMD_GET_POS,
+    CMD_AZ_GET_OFFSET,
+    CMD_EL_GET_OFFSET,
+    CMD_GET_OFFSET,
+    CMD_AZ_REQ_DN,
+    CMD_EL_REQ_DN,
+};
+
 #ifdef __cplusplus
 }
 #endif

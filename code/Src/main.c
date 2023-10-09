@@ -6,26 +6,6 @@
 
 void SystemClock_Config(void);
 
-enum cmd_id {
-    CMD_RESET = 1,
-    CMD_TEST = 2,
-    CMD_LED_TOGGLE,
-    CMD_AZ_SET_K,
-    CMD_EL_SET_K,
-    CMD_SET_ORIGIN,
-    CMD_STOP,
-    CMD_AZ_STOP,
-    CMD_EL_STOP,
-    CMD_AZ_OFFSET,
-    CMD_EL_OFFSET,
-    CMD_AZ_GET_POS,
-    CMD_EL_GET_POS,
-    CMD_GET_POS,
-    CMD_AZ_GET_OFFSET,
-    CMD_EL_GET_OFFSET,
-    CMD_GET_OFFSET,
-};
-
 struct cmd {
     uint16_t id;
     int16_t arg;
@@ -63,6 +43,12 @@ static void cmd_work(struct cmd cmd)
     } break;
     case CMD_EL_OFFSET: {
         driver_el_offset(cmd.arg);
+    } break;
+    case CMD_AZ_REQ_DN: {
+        driver_az_req_dn(cmd.arg);
+    } break;
+    case CMD_EL_REQ_DN: {
+        driver_el_req_dn(cmd.arg);
     } break;
     case CMD_AZ_SET_K: {
         driver_az_set_k(cmd.arg);
