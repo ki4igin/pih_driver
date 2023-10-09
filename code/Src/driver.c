@@ -6,13 +6,13 @@
 static struct motor az = {
     .gpio_p = {S3_GPIO_Port, S3_Pin},
     .gpio_n = {S4_GPIO_Port, S4_Pin},
-    .k_deg2pulse = 20,
+    .k_deg2pulse = 19,
 };
 
 static struct motor el = {
     .gpio_p = {S1_GPIO_Port, S1_Pin},
     .gpio_n = {S2_GPIO_Port, S2_Pin},
-    .k_deg2pulse = 20,
+    .k_deg2pulse = 19,
 };
 
 void driver_az_offset(int32_t offset_deg)
