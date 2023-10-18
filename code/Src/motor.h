@@ -25,14 +25,14 @@ inline static void motor_offset(struct motor *s, int32_t offset_deg)
     s->offset_ms += offset_deg * s->k_deg2pulse;
 }
 
-inline static int32_t motor_get_pos(struct motor *s)
+inline static int16_t motor_get_pos(struct motor *s)
 {
-    return s->offset_ms / s->k_deg2pulse;
+    return s->offset_ms / (int16_t)s->k_deg2pulse;
 }
 
-inline static int32_t motor_get_offset(struct motor *s)
+inline static int16_t motor_get_offset(struct motor *s)
 {
-    return s->pos_ms / s->k_deg2pulse;
+    return s->pos_ms / (int16_t)s->k_deg2pulse;
 }
 
 inline static void motor_set_origin(struct motor *s)
