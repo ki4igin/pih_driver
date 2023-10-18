@@ -60,12 +60,20 @@ void UART_Send_Array(void *buf, uint32_t size)
 {
     uint8_t *p = buf;
     LL_GPIO_SetOutputPin(USART1_DE_GPIO_Port, USART1_DE_Pin);
+    while (LL_USART_IsActiveFlag_TXE(USART1) == 0) {
+        ;
+    }
+    LL_USART_TransmitData8(USART1, 0xAA);
     for (uint32_t i = 0; i < size; i++) {
         while (LL_USART_IsActiveFlag_TXE(USART1) == 0) {
             ;
         }
         LL_USART_TransmitData8(USART1, p[i]);
     }
+    while (LL_USART_IsActiveFlag_TXE(USART1) == 0) {
+        ;
+    }
+    LL_USART_TransmitData8(USART1, 0x55);
     LL_USART_ClearFlag_TC(USART1);
     LL_USART_EnableIT_TC(USART1);
 }
