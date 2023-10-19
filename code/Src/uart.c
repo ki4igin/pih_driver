@@ -81,14 +81,18 @@ void UART_Send_Array(void *buf, uint32_t size)
 void USART1_IRQHandler(void)
 {
     if (LL_USART_IsActiveFlag_RXNE(USART1)) {
+        uart_buf_rx.data[uart_buf_rx.count] = LL_USART_ReceiveData8(USART1);
         if (uart_buf_rx.count == 0) {
             TIM11->CNT = 0;
             TIM11->CR1 |= TIM_CR1_CEN;
+            if (uart_buf_rx.data[0] == CMD_OFFSET) {
+                uart_buf_rx.size = UART_NBUF_RX;
+            } else {
+                uart_buf_rx.size = 4;
+            }
         }
 
-        uart_buf_rx.data[uart_buf_rx.count++] = LL_USART_ReceiveData8(USART1);
-
-        if (uart_buf_rx.count == UART_NBUF_RX) {
+        if (++uart_buf_rx.count == uart_buf_rx.size) {
             TIM11->CR1 &= ~TIM_CR1_CEN;
             uart_buf_rx.count = 0;
             uart_rx.is_new_data = 1;

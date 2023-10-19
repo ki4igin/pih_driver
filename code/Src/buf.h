@@ -4,6 +4,7 @@
 #define buf_declare(_id, _size) \
     struct _id {                \
         uint32_t count;         \
+        uint32_t size;         \
         uint8_t data[_size];    \
     } _id
 

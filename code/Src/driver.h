@@ -10,6 +10,7 @@ struct coord {
 
 void driver_az_offset(int32_t offset_deg);
 void driver_el_offset(int32_t offset_deg);
+void driver_offset(struct coord offset);
 void driver_az_req_dn(int32_t offset_deg);
 void driver_el_req_dn(int32_t offset_deg);
 void driver_az_stop(void);

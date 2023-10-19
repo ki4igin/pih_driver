@@ -29,7 +29,7 @@ void MX_TIM11_Init(void)
     LL_TIM_InitTypeDef TIM_InitStruct = {
         .Prescaler = 84 - 1,
         .CounterMode = LL_TIM_COUNTERMODE_UP,
-        .Autoreload = 400 - 1,
+        .Autoreload = 600 - 1,
         .ClockDivision = LL_TIM_CLOCKDIVISION_DIV1,
     };
     LL_TIM_Init(TIM11, &TIM_InitStruct);

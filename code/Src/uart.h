@@ -3,7 +3,7 @@
 
 #include "stm32f4xx.h"
 
-#define UART_NBUF_RX 4
+#define UART_NBUF_RX 6
 
 extern struct uart_rx {
     volatile uint32_t is_new_data;

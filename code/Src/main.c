@@ -16,14 +16,14 @@ struct cmd_ex {
     int16_t arg[2];
 };
 
-static void cmd_work(struct cmd cmd)
+static void cmd_work(struct cmd *cmd)
 {
-    switch (cmd.id) {
+    switch (cmd->id) {
     case CMD_RESET: {
         NVIC_SystemReset();
     } break;
     case CMD_TEST: {
-        cmd.arg = 0x0A0A;
+        cmd->arg = 0x0A0A;
         UART_Send_Array(&cmd, sizeof(cmd));
     } break;
     case CMD_STOP: {
@@ -39,29 +39,29 @@ static void cmd_work(struct cmd cmd)
         gpio_led_toggle();
     } break;
     case CMD_AZ_OFFSET: {
-        driver_az_offset(cmd.arg);
+        driver_az_offset(cmd->arg);
     } break;
     case CMD_EL_OFFSET: {
-        driver_el_offset(cmd.arg);
+        driver_el_offset(cmd->arg);
     } break;
     case CMD_AZ_REQ_DN: {
-        driver_az_req_dn(cmd.arg);
+        driver_az_req_dn(cmd->arg);
     } break;
     case CMD_EL_REQ_DN: {
-        driver_el_req_dn(cmd.arg);
+        driver_el_req_dn(cmd->arg);
     } break;
     case CMD_AZ_SET_K: {
-        driver_az_set_k(cmd.arg);
+        driver_az_set_k(cmd->arg);
     } break;
     case CMD_EL_SET_K: {
-        driver_el_set_k(cmd.arg);
+        driver_el_set_k(cmd->arg);
     } break;
     case CMD_AZ_GET_POS: {
-        cmd.arg = driver_get_pos().az;
+        cmd->arg = driver_get_pos().az;
         UART_Send_Array(&cmd, sizeof(cmd));
     } break;
     case CMD_EL_GET_POS: {
-        cmd.arg = driver_get_pos().el;
+        cmd->arg = driver_get_pos().el;
         UART_Send_Array(&cmd, sizeof(cmd));
     } break;
     case CMD_GET_POS: {
@@ -73,25 +73,38 @@ static void cmd_work(struct cmd cmd)
         UART_Send_Array(&cmd_ex, sizeof(cmd_ex));
     } break;
     case CMD_AZ_GET_OFFSET: {
-        cmd.arg = driver_get_offset().az;
+        cmd->arg = driver_get_offset().az;
         UART_Send_Array(&cmd, sizeof(cmd));
     } break;
     case CMD_EL_GET_OFFSET: {
-        cmd.arg = driver_get_offset().el;
+        cmd->arg = driver_get_offset().el;
         UART_Send_Array(&cmd, sizeof(cmd));
     } break;
-    case CMD_GET_OFFSET: {
-        struct cmd_ex cmd_ex = {
+    case CMD_OFFSET: {
+        struct cmd_ex *rx = (struct cmd_ex *)cmd;
+        struct coord offset = {
+            .az = rx->arg[0],
+            .el = rx->arg[1],
+        };
+        driver_offset(offset);
+        struct cmd_ex tx = {
             .id = CMD_GET_OFFSET,
             .arg[0] = driver_get_offset().az,
             .arg[1] = driver_get_offset().el,
         };
-        UART_Send_Array(&cmd_ex, sizeof(cmd_ex));
+        UART_Send_Array(&tx, sizeof(tx));
+    } break;
+    case CMD_GET_OFFSET: {
+        struct cmd_ex tx = {
+            .id = CMD_GET_OFFSET,
+            .arg[0] = driver_get_offset().az,
+            .arg[1] = driver_get_offset().el,
+        };
+        UART_Send_Array(&tx, sizeof(tx));
     } break;
     case CMD_SET_ORIGIN: {
         driver_origin();
     } break;
-
     default:
         break;
     }
@@ -125,8 +138,7 @@ int main(void)
 
         if (uart_rx.is_new_data) {
             uart_rx.is_new_data = 0;
-            struct cmd cmd = *(struct cmd *)&uart_rx.data;
-            cmd_work(cmd);
+            cmd_work((struct cmd *)uart_rx.data);
         }
     }
 }

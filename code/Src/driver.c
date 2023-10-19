@@ -27,6 +27,12 @@ void driver_el_offset(int32_t offset_deg)
     motor_offset(&el, offset_deg);
 }
 
+void driver_offset(struct coord offset)
+{
+    motor_offset(&az, offset.az);
+    motor_offset(&el, offset.el);
+}
+
 void driver_az_req_dn(int32_t offset_deg)
 {
     motor_req_dn(&az, offset_deg);

@@ -66,6 +66,7 @@ enum cmd_id {
     CMD_GET_OFFSET,
     CMD_AZ_REQ_DN,
     CMD_EL_REQ_DN,
+    CMD_OFFSET,
 };
 
 #ifdef __cplusplus
