@@ -96,7 +96,12 @@ void USART1_IRQHandler(void)
             TIM11->CR1 &= ~TIM_CR1_CEN;
             uart_buf_rx.count = 0;
             uart_rx.is_new_data = 1;
-            *(uint32_t *)uart_rx.data = *(uint32_t *)uart_buf_rx.data;
+            uint32_t n_word = uart_buf_rx.size / 2;
+            uint16_t *src = (uint16_t *)uart_buf_rx.data;
+            uint16_t *dst = (uint16_t *)uart_rx.data;
+            for (uint32_t i = 0; i < n_word; i++) {
+                dst[i] = src[i];
+            }
         }
     }
     if (LL_USART_IsActiveFlag_TC(USART1)) {
